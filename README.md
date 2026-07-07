@@ -35,7 +35,8 @@ A small business could use this workflow as the foundation for:
 
 ### Screenshot
 
-(Add screenshot here)
+<img width="849" height="415" alt="image" src="https://github.com/user-attachments/assets/6a432a6a-b7cf-41e7-9fdf-1b442473a99c" />
+
 
 ### Files
 
