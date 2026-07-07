@@ -1,0 +1,120 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        -96
+      ],
+      "id": "9112beeb-ec40-4ffa-bf11-db33dbbe5681",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -496,
+        -96
+      ],
+      "id": "a29e2c0c-a2f3-442a-8f61-5b4ef418f735",
+      "name": "When chat message received",
+      "webhookId": "5147c938-70a5-4690-a5a0-4c8bc0b974bd"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Answer the user's question in a helpful way."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -320,
+        -96
+      ],
+      "id": "c4df602d-150f-4acf-8668-1dec270ef94d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "openrouter/auto",
+          "mode": "list",
+          "cachedResultName": "openrouter/auto"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -320,
+        112
+      ],
+      "id": "68e70ab9-1127-43bc-882f-abff86e30499",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fOohryMu4Jckd6hH",
+          "name": "OpenAI account 5"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6f318387-8411-4f16-9b8f-4fc588561c54",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "689312e4b0dd7b0647f6f711713fa3f89fa1de1341e1cb49f60cfcd917c66a5b"
+  },
+  "nodeGroups": [],
+  "id": "QIzrXkJXK0mxfmTD",
+  "tags": []
+}
