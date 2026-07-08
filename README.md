@@ -41,3 +41,22 @@ A small business could use this workflow as the foundation for:
 ### Files
 
 - day1-ai-chat-assistant.json
+
+# AI Automation Portfolio
+
+## Project 1: AI Chat Assistant
+Completed
+
+## Project 2: AI Note Summarizer
+Completed
+
+### Business Problem
+Manual notes are often messy and time-consuming to clean.
+
+### Solution
+The workflow automatically summarizes notes and writes the result back into Google Sheets.
+
+### Technologies
+- n8n
+- Google Sheets
+- OpenRouter
