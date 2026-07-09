@@ -1,0 +1,158 @@
+{
+  "name": "Day 3 - AI Email Assistant",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        0
+      ],
+      "id": "e27c11f6-142b-4906-9599-e3b2ca78907b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e73a2609-29ee-4975-8271-c2775716e159",
+              "name": "note",
+              "value": "Need 10 LinkedIn content ideas about AI automation for small businesses.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "1888eed2-55de-499a-ad74-312e71200134",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Summarize this note in one professional sentence:\n\n{{ $json.note }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        96,
+        0
+      ],
+      "id": "c9e31b71-0eef-49e7-95ba-7e75b18a9616",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "openrouter/auto",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        96,
+        176
+      ],
+      "id": "b313ddc6-f258-4308-af52-006e13531173",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "4ynfkddsjqHh2Usc",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "AI Generated Summary",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        0
+      ],
+      "id": "feef541a-da89-4e9c-a1e7-c6bd37350588",
+      "name": "Create a draft",
+      "webhookId": "a0a321b5-73ca-433d-ade3-2954455a4df3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y6PwwAtUaRyCPHbo",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e0a8aac4-e3b3-495d-b067-b211f11737e2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "689312e4b0dd7b0647f6f711713fa3f89fa1de1341e1cb49f60cfcd917c66a5b"
+  },
+  "nodeGroups": [],
+  "id": "2QIyG5PAOWPH7grw",
+  "tags": []
+}
