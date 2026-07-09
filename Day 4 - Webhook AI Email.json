@@ -1,0 +1,128 @@
+{
+  "name": "Day 4 - Webhook AI Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e6f9776e-bc2c-4c9a-8cba-482bb4cfd864",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        -64
+      ],
+      "id": "92716db5-e25e-48e5-b6ad-ad7b419403cf",
+      "name": "Webhook",
+      "webhookId": "e6f9776e-bc2c-4c9a-8cba-482bb4cfd864"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an assistant.\n\nName:\n{{ $json.body.name }}\n\nMessage:\n{{ $json.body.message }}\n\nCreate a professional reply.",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -32,
+        -64
+      ],
+      "id": "5ab31be6-83bf-4905-be5a-b5c4ee932f4d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "openrouter/auto",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        160
+      ],
+      "id": "4064e5e0-3745-49a3-80f4-a57c2dd00d98",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Mn2GvtKGG09FSlb5",
+          "name": "OpenRouter account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "pop2005eye1026@gmail.com",
+        "subject": "New AI Response",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        288,
+        -64
+      ],
+      "id": "96eb4c3f-b139-40d4-bd2d-0d972d6ea729",
+      "name": "Send a message",
+      "webhookId": "358472a2-d16c-4183-a743-1e839024ac37",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y6PwwAtUaRyCPHbo",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1748ef5e-ad7a-4cfb-aada-31f2ba1a5942",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "689312e4b0dd7b0647f6f711713fa3f89fa1de1341e1cb49f60cfcd917c66a5b"
+  },
+  "nodeGroups": [],
+  "id": "mMhpurhXIc0Ergpx",
+  "tags": []
+}
